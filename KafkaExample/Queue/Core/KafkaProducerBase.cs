@@ -15,19 +15,19 @@ namespace KafkaExample3.Queue.Core
         {
             _kafkaSettings = options.Value;
             _topic = topic;
-        }
 
-        public async Task SendKafkaAsync(T message)
-        {
             ProducerConfig config = new ProducerConfig
             {
                 BootstrapServers = _kafkaSettings.Brokers,
                 ClientId = Dns.GetHostName()
             };
+            _producer = new ProducerBuilder<Null, string>(config).Build();
+        }
 
+        public async Task SendKafkaAsync(T message)
+        {
             try
             {
-                _producer = new ProducerBuilder<Null, string>(config).Build();
                 await _producer.ProduceAsync(_topic, new Message<Null, string>
                 {
                     Value = Newtonsoft.Json.JsonConvert.SerializeObject(message)
@@ -40,15 +40,8 @@ namespace KafkaExample3.Queue.Core
         }
         public void SendKafka(T message)
         {
-            ProducerConfig config = new ProducerConfig
-            {
-                BootstrapServers = _kafkaSettings.Brokers,
-                ClientId = Dns.GetHostName()
-            };
-
             try
             {
-                _producer = new ProducerBuilder<Null, string>(config).Build();
                 _producer.Produce(_topic, new Message<Null, string>
                 {
                     Value = Newtonsoft.Json.JsonConvert.SerializeObject(message)
