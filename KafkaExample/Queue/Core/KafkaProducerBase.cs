@@ -1,10 +1,9 @@
 ﻿using Confluent.Kafka;
-using KafkaExample3.Queue.Messages;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.Net;
 
-namespace KafkaExample3.Queue.Core
+namespace KafkaExample.Queue.Core
 {
     public abstract class KafkaProducerBase<T> : IDisposable
     {

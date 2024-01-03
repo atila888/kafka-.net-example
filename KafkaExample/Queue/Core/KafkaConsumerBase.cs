@@ -5,12 +5,13 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace KafkaExample3.Queue.Core
+namespace KafkaExample.Queue.Core
 {
     public abstract class KafkaConsumerBase<T> : BackgroundService
     {
         protected string _topic;
-        private readonly IConsumer<Null, string> _kafkaConsumer;
+        private readonly IConsumer<string, string> _kafkaConsumer;
+        private readonly KafkaMessage<T> _kafkaMessage;
         public KafkaConsumerBase(IOptions<KafkaSettings> options, string topic)
         {
             _topic= topic;
@@ -20,7 +21,8 @@ namespace KafkaExample3.Queue.Core
                 BootstrapServers = options.Value.Brokers,
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
-            _kafkaConsumer = new ConsumerBuilder<Null, string>(config).Build();
+            _kafkaConsumer = new ConsumerBuilder<string, string>(config).Build();
+            _kafkaMessage = new KafkaMessage<T>();
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -35,10 +37,15 @@ namespace KafkaExample3.Queue.Core
                 try
                 {
                     var cr = _kafkaConsumer.Consume(cancellationToken);
+                    
+                    _kafkaMessage.message=Newtonsoft.Json.JsonConvert.DeserializeObject<T>(cr.Message.Value);
+                    _kafkaMessage.timestamp = cr.Message.Timestamp;
+                    _kafkaMessage.key = cr.Message.Key;
+                    _kafkaMessage.headers = cr.Message.Headers;
 
                     var message =
                         Newtonsoft.Json.JsonConvert.DeserializeObject<T>(cr.Message.Value);
-                    HandleMessage(message);
+                    HandleMessage(_kafkaMessage);
                 }
                 catch (OperationCanceledException)
                 {
@@ -61,7 +68,7 @@ namespace KafkaExample3.Queue.Core
             }
         }
 
-        public abstract Task HandleMessage(T message);
+        public abstract Task HandleMessage(KafkaMessage<T> message);
 
         public override void Dispose()
         {
