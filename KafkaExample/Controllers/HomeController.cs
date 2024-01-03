@@ -1,9 +1,8 @@
-﻿using KafkaExample3.Queue.Core;
-using KafkaExample3.Queue.Messages;
-using KafkaExample3.Queue.Producer;
+﻿using KafkaExample.Queue.Messages;
+using KafkaExample.Queue.Producer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KafkaExample3.Controllers
+namespace KafkaExample.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -1,4 +1,4 @@
-﻿namespace KafkaExample3.Queue.Messages
+﻿namespace KafkaExample.Queue.Messages
 {
     public class PersonInfoMessage
     {

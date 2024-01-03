@@ -1,11 +1,6 @@
-using Confluent.Kafka;
-using KafkaExample3.Queue.Consumer;
-using KafkaExample3.Queue.Core;
-using KafkaExample3.Queue.Producer;
-using Microsoft.AspNetCore.Connections;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using KafkaExample.Queue.Consumer;
+using KafkaExample.Queue.Core;
+using KafkaExample.Queue.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 

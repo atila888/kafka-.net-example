@@ -1,9 +1,9 @@
-﻿using KafkaExample3.Queue.Core;
-using KafkaExample3.Queue.Messages;
+﻿using KafkaExample.Queue.Core;
+using KafkaExample.Queue.Messages;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace KafkaExample3.Queue.Consumer
+namespace KafkaExample.Queue.Consumer
 {
     public class PersonInfoConsumer : KafkaConsumerBase<PersonInfoMessage>
     {
@@ -11,10 +11,10 @@ namespace KafkaExample3.Queue.Consumer
         {
         }
 
-        public override async Task HandleMessage(PersonInfoMessage message)
+        public override async Task HandleMessage(KafkaMessage<PersonInfoMessage> message)
         {
             Debug.WriteLine(message);
-            Debug.WriteLine("Handle Yakaladı");
+            Debug.WriteLine("New message received...");
         }
     }
 }

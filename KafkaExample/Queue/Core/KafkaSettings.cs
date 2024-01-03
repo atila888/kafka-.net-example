@@ -1,4 +1,4 @@
-﻿namespace KafkaExample3.Queue.Core
+﻿namespace KafkaExample.Queue.Core
 {
     public class KafkaSettings
     {

@@ -1,9 +1,9 @@
 ﻿using Confluent.Kafka;
-using KafkaExample3.Queue.Core;
-using KafkaExample3.Queue.Messages;
+using KafkaExample.Queue.Core;
+using KafkaExample.Queue.Messages;
 using Microsoft.Extensions.Options;
 
-namespace KafkaExample3.Queue.Producer
+namespace KafkaExample.Queue.Producer
 {
     public class PersonInfoProducer : KafkaProducerBase<PersonInfoMessage>
     {
